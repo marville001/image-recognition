@@ -10,7 +10,7 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 //
 
 const app = new Clarifai.App({
-  apiKey: process.env.REACT_APP_CLARIFAI_KEY
+  apiKey: "b881c277bc80412cbd14e42818b7e74f"
 });
 //
 const particlesOptions = {
@@ -68,6 +68,7 @@ class App extends Component {
         this.displayFaceBox(this.calculateFaceLocation(response))
       )
       .catch(err => console.log(err));
+    console.log(" Api key " + process.env.REACT_APP_CLARIFAI_KEY);
   };
 
   //
