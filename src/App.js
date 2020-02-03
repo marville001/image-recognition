@@ -11,10 +11,10 @@ import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 //
 
-// const api = process.env.REACT_APP_CLARIFAI_KEY;
+const api = process.env.REACT_APP_CLARIFAI_KEY;
 
 const app = new Clarifai.App({
-  apiKey: "api"
+  apiKey: api
 });
 //
 const particlesOptions = {
