@@ -8,12 +8,13 @@ import Rank from "./components/Rank/Rank";
 import "./App.css";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
 //
 
-const api = process.env.REACT_APP_CLARIFAI_KEY;
+// const api = process.env.REACT_APP_CLARIFAI_KEY;
 
 const app = new Clarifai.App({
-  apiKey: api
+  apiKey: "api"
 });
 //
 const particlesOptions = {
@@ -35,7 +36,8 @@ class App extends Component {
       input: "",
       imgUrl: "",
       box: {},
-      route: "signin"
+      route: "signin",
+      isSignedIn: false
     };
   }
 
@@ -75,27 +77,43 @@ class App extends Component {
   };
 
   onRouteChange = route => {
+    if (route === "signout" || route === "signin") {
+      this.setState({
+        isSignedIn: false
+      });
+    } else if (route === "home") {
+      this.setState({
+        isSignedIn: true
+      });
+    }
     this.setState({ route });
   };
 
   //
   render() {
+    const { route, isSignedIn, box, imgUrl } = this.state;
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
-        <Navigation onRouteChange={this.onRouteChange} />
-        {this.state.route === "signin" ? (
-          <Signin onRouteChange={this.onRouteChange} />
-        ) : (
+        <Navigation
+          onRouteChange={this.onRouteChange}
+          isSignedIn={isSignedIn}
+        />
+        {route === "home" ? (
           <div>
             <Logo />
             <Rank />
+
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
             />
-            <FaceRecognition box={this.state.box} imgUrl={this.state.imgUrl} />
+            <FaceRecognition box={box} imgUrl={imgUrl} />
           </div>
+        ) : route === "signin" ? (
+          <Signin onRouteChange={this.onRouteChange} />
+        ) : (
+          <Register onRouteChange={this.onRouteChange} />
         )}
       </div>
     );
