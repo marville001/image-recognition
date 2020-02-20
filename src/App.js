@@ -11,12 +11,6 @@ import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 //
 
-// const api = process.env.REACT_APP_CLARIFAI_KEY;
-
-const app = new Clarifai.App({
-  apiKey: "2bcd85ecb8074a36b6daa178b4cde962"
-});
-//
 const particlesOptions = {
   particles: {
     number: {
@@ -89,8 +83,14 @@ class App extends Component {
     this.setState(() => {
       return { imgUrl: this.state.input };
     });
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    fetch("http://localhost:3000/imageurl", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(res => res.json())
       .then(response => {
         if (response) {
           fetch("http://localhost:3000/image", {
