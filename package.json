@@ -21,6 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://infinite-mesa-96366.herokuapp.com/",
   "eslintConfig": {
     "extends": "react-app"
   },
